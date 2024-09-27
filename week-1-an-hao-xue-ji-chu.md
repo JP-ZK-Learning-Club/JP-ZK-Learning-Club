@@ -6,7 +6,7 @@ description: 一応枠組みを作りました
 
 ## 対称暗号化と非対称暗号化 (Symmetric & Asymmetric Cryptography)
 
-### AES (Advanced Encryption System)
+### AES (Advanced Encryption System)&#x20;
 
 ### RSA (Rivest Shamir Adleman)
 
