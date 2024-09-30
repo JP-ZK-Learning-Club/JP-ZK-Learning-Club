@@ -22,3 +22,8 @@ JP ZK Learning Clubは、日本語ユーザーに対してZero Knowledge Proof�
 JP ZK Learning Clubは、コミュニティの貢献によって成り立っています。Gitbook上の教育マテリアルの作成、既存のコンテンツの改善、翻訳の提供など、さまざまな形で貢献できます。詳細は[貢献ガイドライン](https://github.com/JP-ZK-Learning-Club/JP-ZK-Learning-Club/blob/main/CONTRIBUTING.md)をご覧ください。
 
 日本語でのゼロ知識証明に関する知識の普及にご協力いただき、ありがとうございます。Gitbookを通じて、一緒に学び、成長していきましょう！
+
+## GitBookへの感謝
+JP ZK Learning Clubは、GitBookが提供するコミュニティプランに心から感謝しています。
+GitBookのサポートにより、私たちは無料で高品質なコンテンツを編集・共有できる環境を享受しています。
+この支援により、日本語でのゼロ知識証明に関する教育リソースを広く普及させ、コミュニティの成長と教育の推進を実現することが可能となりました。
