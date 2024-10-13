@@ -6,3 +6,7 @@
 * [Week 5 Frontier](week-5-frontier.md)
 * [楕円曲線](tuo-yuan-qu-xian.md)
 * [test](test.md)
+
+## PSE Core Program
+
+* [Week 1](pse-core-program/week-1.md)
