@@ -20,9 +20,3 @@
 
 * [Week 2 さらなる暗号技術とSNARKsとSTARKs](page.md)
 * [Week 5 Frontier](week-5-frontier.md)
-* [楕円曲線](tuo-yuan-qu-xian.md)
-* [test](test.md)
-
-## PSE Core Program
-
-* [Week 1](pse-core-program-1/week-1.md)
