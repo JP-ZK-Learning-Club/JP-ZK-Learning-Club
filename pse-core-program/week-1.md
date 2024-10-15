@@ -81,7 +81,7 @@ AESは対称暗号の一種。鍵生成、暗号化、復号化の三つのア�
 
 </details>
 
-### RSA (Rivest Shamir Adleman)
+### 非対称暗号: RSA (Rivest Shamir Adleman)
 
 RSAは非対称暗号の一種。鍵生成、鍵共有、暗号化、復号三つのアルゴリズムで定義される。
 
@@ -127,15 +127,72 @@ RSAは非対称暗号の一種。鍵生成、鍵共有、暗号化、復号三�
 
 ### マークルツリー (Merkle Tree)
 
-## デジタル署名 (Digital Signature)
+### デジタル署名 (Digital Signature): Schnorr署名 (Schnorr Signature)
 
-### Schnorr署名 (Schnorr Signature)
+デジタル署名とは、非対称暗号を利用し、電子文書に対し暗号を用いた署名を付与することで、その電子文書が作成名義人によって作成されたこと、そして作成されて以降が改変されていないことを証明する技術です。
 
-## 離散対数に基づく公開鍵暗号学
+例: AliceはBobへあるメッセージ $$m$$ を送信し、そのメッセージが自分から作成し、改変されていないことを証明したい。
 
-### Diffie-Hellman 鍵交換 (Diffie-Hellman Key Exchange) [Anonymous Anonymous](https://app.gitbook.com/u/M0Ag2PM8qphSBEuVlTmprHj1RQ93 "mention")
+<details>
 
+<summary>プロトコル</summary>
 
+#### Aliceの事前準備
+
+1. 大きな素数 $$p$$、そして$$p-1$$を割り切れる素数 $$q$$
+2. 秘密鍵 $$x$$ を $$0 < x < q$$ から選択する
+3. 公開鍵 $$y = g^x \pmod p$$ を作成する
+4. $$q$$を法とする整数乗法群$$\mathbb{Z}_p^*$$
+5. ハッシュ関数 $$H$$
+
+#### Aliceはメッセージ $$m$$ に署名する
+
+1. nonce $$k$$を $$0 < k < p -1$$から選択する
+2. $$r=g^k \pmod p$$ を計算する
+3. $$m$$ と $$r$$ を結合し、 $$e=H(m||r)$$を計算する
+4. $$s=k-xe \pmod q$$を計算する
+5. $$(s,e,m)$$をBobへ送信する
+
+#### Bobは $$(s,e)$$に基づいて $$m$$ を検証する
+
+1. $$\begin{align} r' &= g^sy^e \pmod p \\ &= g^{k-xe}g^{xe} \pmod p \\ &= g^{k-xe+xe} \pmod p \\ &= g^k \pmod p \end{align}$$
+2. $$e'=H(m||r)$$を計算する
+
+$$e' ==e$$ であれば、Bobはメッセージ $$m$$ はAliceが作成し、改変されず着信したことを証明できたとみなす。
+
+</details>
+
+### 離散対数に基づく公開鍵暗号学: Diffie-Hellman 鍵交換 (Diffie-Hellman Key Exchange)
+
+AliceとBobの間、事前の秘密の共有無しに、盗聴の可能性のある通信路を使って、共通暗号鍵を構築する方法です。共通公開鍵を生成する過程までは非対称暗号を利用し、その後の交流は共通暗号鍵に基づく対照暗号を利用します。
+
+<details>
+
+<summary>プロトコル</summary>
+
+#### 事前準備
+
+1. 大きな素数 $$p$$
+2. 整数乗法群$$\mathbb{Z}_p^*$$、生成元とする$$g$$と$$h \in \mathbb{Z}_p^*$$
+
+#### 鍵生成
+
+1. Aliceは秘密鍵 $$a$$ を $$1 < a < p-1$$からランダムに選択する
+2. Bobは秘密鍵 $$b$$ を $$1 < b < p-1$$からランダムに選択する
+
+#### 公開値を計算する
+
+1. Aliceは公開鍵 $$A=g^a \pmod p$$を計算し、Bobへ送信する
+2. Bobは公開鍵 $$B=g^b \pmod p$$を計算し、Aliceへ送信する
+
+#### お互いローカルで共通秘密鍵を計算する
+
+1. Aliceは共通秘密鍵 $$s=B^a \pmod p$$ を計算する
+2. Bobは共通秘密鍵 $$s=A^b \pmod p$$ を計算する
+
+そしてAliceとBobは共通秘密鍵$$s$$を共有することをできました
+
+</details>
 
 ### Elgamal暗号化 (Elgamal Encryption)
 
