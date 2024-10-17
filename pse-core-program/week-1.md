@@ -255,9 +255,15 @@ Pedersen Commitmentは以下のような手順で機能します：
 
 一方で、Pedersen Commitmentは離散対数問題の難しさに依存しているため、将来的に量子コンピュータなどでこの問題が解決されると、Binding性が失われる可能性があります。
 
-## 楕円曲線暗号 (Elliptic Curve Cryptography) [Anonymous Anonymous](https://app.gitbook.com/u/M0Ag2PM8qphSBEuVlTmprHj1RQ93 "mention")
+## 楕円曲線暗号 (Elliptic Curve Cryptography)
 
-### ECDSA (Elliptic Curve Digital Signature Algorithm) [Anonymous Anonymous](https://app.gitbook.com/u/M0Ag2PM8qphSBEuVlTmprHj1RQ93 "mention")
+楕円曲線暗号は、有限体上の楕円曲線の整数点の集合をアーベル群として利用した非対称暗号です。
+
+RSAと比べると、同じビット数のセキュリティーに対して、鍵の大きさが小さいメリットがあり、計算の効率化が重視されています。
+
+### ECDSA (Elliptic Curve Digital Signature Algorithm)
+
+ECDSAは楕円曲線暗号を
 
 ### BLS署名 (Boneh-Lynn-Shacham Signature)
 

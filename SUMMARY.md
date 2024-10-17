@@ -6,9 +6,8 @@
 
 * [暗号学](prerequisites/cryptography/README.md)
   * [決定問題](prerequisites/cryptography/decision-problem.md)
-  * [P/NP問題](prerequisites/cryptography/p-np.md)
-  * [計算複雑性理論](prerequisites/cryptography/ji-suan-fu-za-xing-li-lun.md)
-  
+  * [P/NP問題](prerequisites/cryptography/pnp-wen-ti.md)
+  * [計算複雑性理論](prerequisites/cryptography/computational-complexity.md)
 * [数学](prerequisites/mathematics/README.md)
   * [代数的構造](prerequisites/mathematics/algebraic-structure.md)
   * [離散対数問題 (DLP)](prerequisites/mathematics/li-san-dui-shu-wen-ti-dlp.md)
