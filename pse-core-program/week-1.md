@@ -263,7 +263,41 @@ RSAと比べると、同じビット数のセキュリティーに対して、�
 
 ### ECDSA (Elliptic Curve Digital Signature Algorithm)
 
-ECDSAは楕円曲線暗号を
+Schnorr署名と似ているようなデジタル署名であるが、利用している群を整数乗法群から有限体上の楕円曲線の整数点の集合群に切り替えたと認識した方が理解しやすいかと思います。
+
+例: AliceはBobへあるメッセージ $$m$$ を送信し、そのメッセージが自分から作成し、改変されていないことを証明したい。
+
+<details>
+
+<summary>プロトコル</summary>
+
+#### Aliceの事前準備
+
+1. 利用する楕円曲線 $$E$$ , 素数 $$p$$ とそれに基づく次数 $$n$$ の有限体上の楕円曲線の整数点の集合
+2. ベースポイント $$G$$&#x20;
+3. $$1<S_k<n-1$$ を満たす秘密鍵 $$S_k$$
+4. $$P_k=S_k \cdot G$$
+5. ハッシュ関数 $$H$$
+6. $$S_k$$ 以外の情報を全部共有する
+
+#### Aliceはメッセージ $$m$$ に署名する
+
+1. &#x20;$$1<k<n-1$$ を満たすnonce $$k$$ を選択する
+2. &#x20;$$r=(x_1,y_1)=kG$$ を計算する
+3. メッセージをハッシュし、 $$h=H(m)$$ を計算する
+4. $$r=x_1 \pmod n$$ を計算する
+5. $$s=k^{-1}(h+rS_k) \pmod n$$ を計算する
+6. $$(m,r,s)$$ をBobへ送信する
+
+#### Bobは $$(s,e)$$に基づいて $$m$$ を検証する
+
+1. ローカルで $$h=H(m)$$ を再現する
+2. $$c=s^{-1} \pmod n$$ を計算し、 $$u_1=h \cdot c, u_2=r \cdot c$$ を計算する
+3. $$\begin{aligned} r &== u_1 \cdot G + u_2 \cdot P_k  \\&= h c \cdot G + rc \cdot P_k  \\&= c (h \cdot G + r \cdot P_k)  \\&= s^{-1}(h \cdot G + r \cdot G \cdot S_k) \\&= \frac {(hG + rG \cdot S_k)} {k^{-1} (h+r \cdot S_k)} \\&= \frac {G(h + r \cdot S_k)} {k^{-1} (h+r \cdot S_k)} \\ &= \frac G {k^{-1}} = kG = r \pmod n \end{aligned}$$を検証する
+
+</details>
+
+
 
 ### BLS署名 (Boneh-Lynn-Shacham Signature)
 
