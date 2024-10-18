@@ -21,3 +21,17 @@
 
 * [Week 2 さらなる暗号技術とSNARKsとSTARKs](page.md)
 * [Week 5 Frontier](week-5-frontier.md)
+
+## zkVM
+
+* [動作概要](zkvm/dong-zuo-gai-yao.md)
+* [ゼロ知識証明](zkvm/zero/README.md)
+  * [メモリ読み込み・書き込みの一貫性](zkvm/zero/memorimimikimino.md)
+  * [命令の実行](zkvm/zero/no.md)
+  * [バイトコードから命令へのデコード](zkvm/zero/baitokdokarahenodekdo.md)
+* [プロジェクト](zkvm/purojekuto/README.md)
+  * [SP1](zkvm/purojekuto/sp1.md)
+  * [RISC-Zero](zkvm/purojekuto/risc-zero.md)
+  * [Jolt](zkvm/purojekuto/jolt.md)
+  * [Valida](zkvm/purojekuto/valida.md)
+  * [Nexus](zkvm/purojekuto/nexus.md)
