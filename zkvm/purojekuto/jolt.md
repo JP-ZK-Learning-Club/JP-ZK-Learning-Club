@@ -8,20 +8,19 @@ Jolt (Just one Lookup Table)はa16z CryptoのArasu Arun、Srinath Setty、Justin
 
 JoltのコアアイデアはルックアップテーブルとSumcheck Protocolで、それらを組み合わせることで回路サイズを抑え、証明を高速化しています。
 
-### VMにおけるRustプログラム実行の流れ
+### JoltにおけるRustプログラム実行と証明生成の流れ
 
-Joltが証明するRiscVのプログラムは、Jolt自身によりコンパイルされ、内部のループでインタプリタ実行されます。ここで重要なのは、実行トレースを取る部分まではゼロ知識証明は使わず、普通のRustプログラムとして書かれており、最後の実行トレースの状態遷移を証明だけがゼロ知識証明です。
+Joltが証明するRISC-Vのプログラムは、Jolt自身によりコンパイルされ、内部のループでインタプリタ実行されます。ここで重要なのは、実行トレースを取る部分まではゼロ知識証明は使わず、普通のRustプログラムとして書かれており、最後の実行トレースの状態遷移を証明だけがゼロ知識証明です。
 
 そのため、JoltはRustで書かれたプログラムに対して
-- RiscVへのコンパイル
-- 内部のインタプリタによる実行トレースの取得
-- 全ての状態遷移の証明
+
+* RISC-V用のバイトコード(ELF形式)へのコンパイル
+* 内部のインタプリタによる実行トレースの取得
+* 全ての状態遷移の証明
 
 を行う機能を提供します。
 
-
-具体的には、Joltの`attribute-macro`は、ホスト環境へのコンパイル時に`guest`クレートに定義されたRustプログラムを動的にRiscVのELFへコンパイルして保存、その実行・証明・検証を行う関数を生成します。
-
+具体的には、Joltの`attribute-macro`は、ホスト環境へのコンパイル時に`guest`クレートに定義されたRustプログラムを動的にRISC-V用のELFへコンパイルして保存、その実行・証明・検証を行う関数を生成します。
 
 例えば、次の`add/guest/src/lib.rs`には`main.rs`で呼ばれている`build_add()`は定義されていませんが、この関数はマクロによってコンパイル時に定義されます。Joltを使った開発者は、証明したいプログラムに`#[jolt::provable]`をつけるだけで良いのです。
 
@@ -36,6 +35,7 @@ fn add(a: u32, b: u32) -> u32 {
   c
 }
 ```
+
 ```rust
 // add/src/main.rs
 use guest::build_add;
@@ -46,8 +46,7 @@ pub fn main() {
 }
 ```
 
-コンパイル時に得られたRiscVのELFは、生成されたprove_hoge()内のループで１命令ずつ実行され、プログラムカウンタ・レジスタ・メモリの読み書き、が全て記録されます。これが実行トレースです。
-
+コンパイル時に得られたELFは、生成されたprove\_hoge()内のループで１命令ずつ実行され、プログラムカウンタ・レジスタ・メモリの読み書き、が全て記録されます。これが実行トレースです。
 
 また、各実行では、以下が命令ごとに繰り返されます。
 
@@ -55,7 +54,6 @@ pub fn main() {
 2. 命令をデコード
 3. 命令を実行
 4. 実行結果をレジスタ/メモリのデータ領域に書き込み
-
 
 ### Joltのコンポーネント
 
@@ -111,4 +109,3 @@ Joltは現在は[32bitの整数にのみ対応](https://a16zcrypto.com/posts/art
 * [https://a16zcrypto.com/posts/article/faqs-on-jolts-initial-implementation/](https://a16zcrypto.com/posts/article/faqs-on-jolts-initial-implementation/)
 * [https://a16zcrypto.com/posts/article/building-on-lasso-and-jolt/](https://a16zcrypto.com/posts/article/building-on-lasso-and-jolt/)
 * [https://github.com/a16z/jolt](https://github.com/a16z/jolt?tab=readme-ov-file)
-
