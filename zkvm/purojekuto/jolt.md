@@ -105,6 +105,7 @@ Joltは現在は[32bitの整数にのみ対応](https://a16zcrypto.com/posts/art
 
 ### 参考文献
 
+* [https://eprint.iacr.org/2023/1217](https://eprint.iacr.org/2023/1217)
 * [https://jolt.a16zcrypto.com/](https://jolt.a16zcrypto.com/)
 * [https://a16zcrypto.com/posts/article/faqs-on-jolts-initial-implementation/](https://a16zcrypto.com/posts/article/faqs-on-jolts-initial-implementation/)
 * [https://a16zcrypto.com/posts/article/building-on-lasso-and-jolt/](https://a16zcrypto.com/posts/article/building-on-lasso-and-jolt/)
