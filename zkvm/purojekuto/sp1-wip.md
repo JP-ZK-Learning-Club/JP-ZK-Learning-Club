@@ -6,9 +6,9 @@ description: SP1はRISC-V の命令セットをサポートしているzkVMで�
 
 開発者はRustで記述した任意のプログラムをSP1 zkVMでコンパイルし、実行することでそのプログラムのexcution proofを作成することができます。
 
-例えばzkTLS(Webproof?)をSP1で実装したりできます。[https://x.com/CremaLabs/status/1847182768306053583](https://x.com/CremaLabs/status/1847182768306053583)
+例えばzkTLS(Webproof)をSP1で実装したりできます。[https://x.com/CremaLabs/status/1847182768306053583](https://x.com/CremaLabs/status/1847182768306053583)
 
-## アーキテクチャ
+## Architecture
 
 基本的なProofシステムは以下のようなRisc 0のアーキテクチャを模倣しています。
 
@@ -18,7 +18,7 @@ description: SP1はRISC-V の命令セットをサポートしているzkVMで�
 
 <figure><img src="../../.gitbook/assets/image (2).png" alt=""><figcaption><p><a href="https://risczero.com/blog/designing-high-performance-zkVMs#aa7a0ec142e844d899a4482066cf33f1">https://risczero.com/blog/designing-high-performance-zkVMs#aa7a0ec142e844d899a4482066cf33f1</a></p></figcaption></figure>
 
-もう少し深く見ていくと下図のようにRustのプログラムをコンパイルした結果得られる[ELF](https://ja.wikipedia.org/wiki/Executable\_and\_Linkable\_Format) Fileを元にExcutionが始まります。
+もう少し深く見ていくと下図のようにRustのプログラムをコンパイルして得られる[ELF](https://ja.wikipedia.org/wiki/Executable\_and\_Linkable\_Format) Fileを元にExcutionが始まります。
 
 <figure><img src="../../.gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
 
@@ -28,9 +28,7 @@ description: SP1はRISC-V の命令セットをサポートしているzkVMで�
 2. Aggregation Prooving
 3. STARK-to-SNARK Prooving
 
-大まかなアーキテクチャと実行順序このようになります。
-
-詳細を見ていく前にSP1のSTARK Proof System(Plonky3)について解説します。
+大まかなアーキテクチャと実行順序このようになります。詳細を見ていく前にSP1のSTARK Proof System(Plonky3)について解説します。
 
 ## Plonky3
 
@@ -38,7 +36,7 @@ SP1のSTARK Proof Systemには[Plonky3](https://github.com/Plonky3/Plonky3)を�
 
 Plonky3はPlonky2のField size(64bit)を32bitに小さくしたもので、ハードウェアフレンドリーなフィールドサイズを持ちながらPlonky2と同等の安全性を保っています。
 
-このように**Field Sizeを小さくしつつ安全性を保つ**というアイデアは後述する[Binius](https://vitalik.eth.limo/general/2024/04/29/binius.html)や[Circle STARK](https://vitalik.eth.limo/general/2024/07/23/circlestarks.html)でも共通しており、昨今のトレンドとも言えます。
+このように**Field Sizeを小さくしつつ安全性を保つ**というアイデアは[Binius](https://vitalik.eth.limo/general/2024/04/29/binius.html)や[Circle STARK](https://vitalik.eth.limo/general/2024/07/23/circlestarks.html)でも共通しており、昨今のトレンドとも言えます。
 
 <figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption><p><a href="https://risczero.com/blog/designing-high-performance-zkVMs">https://risczero.com/blog/designing-high-performance-zkVMs</a></p></figcaption></figure>
 
@@ -66,30 +64,93 @@ VMを構成する要素はChipと呼ばれています。
 
 zkEVM開発者側から見るとzkEVMそのものを作る場合に発生する仕様変更への対応コストを削減することができるため、良いこの設計思想だと思います。
 
-### Interaction <a href="#id-7432" id="id-7432"></a>
+{% hint style="info" %}
+SP1はオープンソースなので自由にPrecompiled Chipを追加できます
+{% endhint %}
+
+## Interaction <a href="#id-7432" id="id-7432"></a>
 
 任意の命令実行に対し各Chipsは他のChipsと相互にやり取りします。
 
+しかし、相互通信における順列を保証する必要が出てきます。そうでなければ命令の割り込みや悪意のある命令の実行が可能になります。
+
 <figure><img src="../../.gitbook/assets/image (3).png" alt=""><figcaption><p><a href="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*aLbVUC4L_EG9i0sctxnplQ.jpeg">https://miro.medium.com/v2/resize:fit:1400/format:webp/1*aLbVUC4L_EG9i0sctxnplQ.jpeg</a></p></figcaption></figure>
 
-この相互通信を可能にしているのが[Logup(Log Derivative Lookup Argument)](https://eprint.iacr.org/2022/1530.pdf)という仕組みです。これは証明者が「自分の持つ秘密の値が特定のテーブルの中に存在すること」をゼロ知識証明で示すものです。これはzkVMのように複雑で大規模な証明システムにおいて証明サイズ(および証明時間)の大幅な削減につながります。
-
-> 元々[Lookup Argument](https://eprint.iacr.org/2023/1518)という仕組みがあり、Logupはこれを応用しています。\
-> どんなに複雑なCircuitでもLookupベースで構築可能であるというアイデアは[Lookup Singularity](https://zkresear.ch/t/lookup-singularity/65)と呼ばれており、barry whitehatが残した功績の中でも特に大きいものです。
+この課題を解決し、相互通信を可能にしているのが[Logup(Log Derivative Lookup Argument)](https://eprint.iacr.org/2022/1530.pdf)という仕組みです。これは証明者が「自分の持つ秘密の値が特定のテーブルの中に存在すること」をゼロ知識証明で示すものです。元々[Lookup Argument](https://eprint.iacr.org/2023/1518)という仕組みがあり、Logupはこれを応用しています。
 
 
+
+Logupを使った順列の評価を見る前に、Chipの構造を把握しておきましょう。
+
+各Chipは固有のLogup Tableを保持しており、Cols(columnsの略称)とMultiplicity(データの各行が使用された回数を記録するカウンター)を管理します。
+
+```
+pub struct Chip<F: Field, A> {
+    /// The underlying AIR of the chip for constraint evaluation.
+    air: A,
+    /// The interactions that the chip sends.
+    sends: Vec<Interaction<F>>,
+    /// The interactions that the chip receives.
+    receives: Vec<Interaction<F>>,
+    /// The relative log degree of the quotient polynomial, i.e. `log2(max_constraint_degree - 1)`.
+    log_quotient_degree: usize,
+}
+```
+
+
+
+```
+pub struct Interaction<F: Field> {
+    pub values: Vec<VirtualPairCol<F>>,
+    pub multiplicity: VirtualPairCol<F>,
+    pub kind: InteractionKind,
+}
+```
+
+
+
+
+
+columnsの定義は各Chipによって異なります。例えばAddSubChipであればこのようになります。
+
+```
+pub struct AddSubCols<T> {
+    pub shard: T,
+    pub channel: T,
+    pub add_operation: AddOperation<T>,
+    pub operand_1: Word<T>,
+    pub operand_2: Word<T>,
+    pub is_add: T,
+    pub is_sub: T,
+}
+```
+
+さて、Chip間の相互通信は以下の図のようにChip2とChip3がChip1にデータを送信する過程を
 
 <figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption><p><a href="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*bii5A9CF8-JIgLoSy5oThQ.jpeg">https://miro.medium.com/v2/resize:fit:1400/format:webp/1*bii5A9CF8-JIgLoSy5oThQ.jpeg</a></p></figcaption></figure>
 
-送信側と受信側は、まず各行のデータに対してランダム線形化を行う。 その結果は各行に対応する多重度を乗算され、各チップに対応する順列に格納される。 レシーバの多重度は負であることに注意。 すべての順列が計算された後、累積される。 送信側と受信側の送受信データが（行の順番を除いて）一致していれば、送信側チップの累積和と受信側チップの累積和は0になることは明らかである。
+まず送信側と受信側は自分のLogup Tableにおける各行のデータに対してrandom linearization化を行います。この結果はその行に対応するMultiplicityとして乗算され、各チップに対応する順列(Permutation)に格納される。&#x20;
 
 
+
+受信機の多重度は負であることに注意。 すべての順列が計算された後、それらは累積される。
+
+
+
+これはzkVMのように複雑で大規模な証明システムにおいて証明サイズ(および証明時間)の大幅な削減につながります。
+
+> \
+> **どんなに複雑なCircuitでもLookupベースで構築可能である**というアイデアは[Lookup Singularity](https://zkresear.ch/t/lookup-singularity/65)と呼ばれており、barry whitehatが残した功績の中でも特に大きいものです。
+
+このあたりの詳細な説明は別のページに書いておきます。
+
+{% hint style="info" %}
+todo:動作概要のページを書き上げ、リンクを貼る。
+{% endhint %}
 
 ## Aggregation Proving
 
-各かく
-
-各シャードの証明は、シャード内の各チップの論理、チップ上の順列計算、チップ間の相互接続論理が正しいことを証明している。
+実行トレースはシャード化されており、シャード内の各チップのロジックやチップ間の相互接続が正しいことを証明している。複数の異なるシーケンスの順列(Permutation)はLogupによって解消される。
 
 <figure><img src="../../.gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
 
@@ -108,4 +169,15 @@ SP1では[ICICLE](https://github.com/ingonyama-zk/icicle)と呼ばれるGPU-acce
 しかしSP1(およびPlonky3)はRust実装なのでRust->Goの[FFI](https://ja.wikipedia.org/wiki/Foreign\_function\_interface)を実行する必要があり、オーバーヘッドがProoving Timeに影響する可能性がありそうです。
 
 
+
+## まとめ
+
+* 基本的にはRisc 0のアーキテクチャと同じ
+* zkEVMへの展開も視野に入れている
+
+## 参考資料
+
+* [https://docs.succinct.xyz/introduction.html](https://docs.succinct.xyz/introduction.html)
+* [https://github.com/succinctlabs/sp1](https://github.com/succinctlabs/sp1)
+* [https://trapdoortech.medium.com/zero-knowledge-proof-introduction-to-sp1-zkvm-source-code-d26f88f90ce4](https://trapdoortech.medium.com/zero-knowledge-proof-introduction-to-sp1-zkvm-source-code-d26f88f90ce4)
 
