@@ -8,39 +8,71 @@ description: SP1はRISC-V の命令セットをサポートしているzkVMで�
 
 例えばzkTLS(Webproof?)をSP1で実装したりできます。[https://x.com/CremaLabs/status/1847182768306053583](https://x.com/CremaLabs/status/1847182768306053583)
 
+## アーキテクチャ
+
+基本的なProofシステムは以下のようなRisc 0のアーキテクチャを模倣しています。
+
+{% hint style="info" %}
+なぜSTARK Proof Systemなのかは次の項で説明します。
+{% endhint %}
+
+<figure><img src="../../.gitbook/assets/image (2).png" alt=""><figcaption><p><a href="https://risczero.com/blog/designing-high-performance-zkVMs#aa7a0ec142e844d899a4482066cf33f1">https://risczero.com/blog/designing-high-performance-zkVMs#aa7a0ec142e844d899a4482066cf33f1</a></p></figcaption></figure>
+
+もう少し深く見ていくと下図のようにRustのプログラムをコンパイルした結果得られる[ELF](https://ja.wikipedia.org/wiki/Executable\_and\_Linkable\_Format) Fileを元にExcutionが始まります。
+
+<figure><img src="../../.gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
+
+そして黄色のProofの部分で以下の順序に従った処理が行われます。
+
+1. RISC-V Prooving
+2. Aggregation Prooving
+3. STARK-to-SNARK Prooving
+
+大まかなアーキテクチャと実行順序このようになります。
+
+詳細を見ていく前にSP1のSTARK Proof System(Plonky3)について解説します。
+
 ## Plonky3
 
-SP1の証明システムにはPlonky3を使用しています。
+SP1のSTARK Proof Systemには[Plonky3](https://github.com/Plonky3/Plonky3)を使用しています。
 
 Plonky3はPlonky2のField size(64bit)を32bitに小さくしたもので、ハードウェアフレンドリーなフィールドサイズを持ちながらPlonky2と同等の安全性を保っています。
 
 このように「Field Sizeを小さくしつつ安全性を保つ」というアイデアは後述する[Binius](https://vitalik.eth.limo/general/2024/04/29/binius.html)や[Circle STARK](https://vitalik.eth.limo/general/2024/07/23/circlestarks.html)でも共通しており、昨今のトレンドとも言えます。
 
+<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption><p><a href="https://risczero.com/blog/designing-high-performance-zkVMs">https://risczero.com/blog/designing-high-performance-zkVMs</a></p></figcaption></figure>
+
 このPlonky3(およびPlonky2)はPlonkishな証明システムにzk-STARKsのFRIコミットメントを適応させたものであり、R1CSとは異なるAIR(Arithmetic Intermediate Representation)という形でステートメントを表現します。
 
-AIRやFRIの仕組みついては[こちらの記事](https://zenn.dev/qope/articles/8d60f77e3a7630#stark%E3%81%A8%E3%81%AF)をご参照ください。記事内で記述されている用に、zk-STARKsはVM friendlyな証明システムと言えるわけです。
+AIRやFRIの具体的な仕組みついては[こちらの記事](https://zenn.dev/qope/articles/8d60f77e3a7630#stark%E3%81%A8%E3%81%AF)をご参照ください。
 
-## アーキテクチャ
+記事内で記述されている用に、繰り返し処理や条件分岐といった複雑な状態遷移を表現する上で、zk-STARKsベースな証明システムはzkVMにおいてzk-SNARKsよりも効率的と言えます。
 
-まず、Rustのプログラムをコンパイルした結果得られる[ELF](https://ja.wikipedia.org/wiki/Executable\_and\_Linkable\_Format) Fileを元にSP1 RISC-V Runtimeが走ります。
+## Building Circuits with Plonky3 <a href="#id-2175" id="id-2175"></a>
 
-<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+VMを構成する要素はChipと呼ばれています。
 
-ここでのChipとはハードウェア的な意味ではありません。特定の機能の効率的な組み込み済みzk実装と捉えるとわかりやすいかと思います。Halo2に馴染みがある方であれば、ピンと来るかもです。そうではない人は[この記事](https://trapdoortech.medium.com/zero-knowledge-proof-a-guide-to-halo2-source-code-9be0cf792f18)を読むとイメージつくかと思います
+ここでのChipとはハードウェア的な意味ではありません。特定の機能の効率的な組み込み済みzk実装と捉えるとわかりやすいかと思います。Halo2に馴染みがある方であれば、ピンと来るかもです。そうではない人は[この記事](https://trapdoortech.medium.com/zero-knowledge-proof-a-guide-to-halo2-source-code-9be0cf792f18)を読むとイメージつくかと思います。
 
-
+<figure><img src="../../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 各chipはMachineAir Traitと依存関係を持っており、STARK Machineにおける実行内容をAIRのステートメントとして変換する処理が行われます。
 
-<figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
 
-### Precompiled ChipsとSP1 baed zkEVMの可能性
 
 ここで注目して欲しいのがPrecompiled Chipsの存在です。\
 これらはEVMで言うところの[Precompiled Contact](https://www.evm.codes/precompiled)のような存在だと考えられます。\
 つまり、SP1は汎用的なzkVMでありながらzkEVMへの応用も見越しているようです。
 
 zkEVM開発者側から見るとzkEVMそのものを作る場合に発生する仕様変更への対応コストを削減することができるため、良いこの設計思想だと思います。
+
+### Interaction <a href="#id-7432" id="id-7432"></a>
+
+<figure><img src="../../.gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
+
+
+
+<figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
 
 ## **on-chain Verification**
 
