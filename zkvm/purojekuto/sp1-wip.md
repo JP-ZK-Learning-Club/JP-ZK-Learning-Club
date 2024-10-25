@@ -6,6 +6,8 @@ description: SP1はRISC-V の命令セットをサポートしているzkVMで�
 
 開発者はRustで記述した任意のプログラムをSP1 zkVMでコンパイルし、実行することでそのプログラムのexcution proofを作成することができます。
 
+例えばzkTLS(Webproof?)をSP1で実装したりできます。[https://x.com/CremaLabs/status/1847182768306053583](https://x.com/CremaLabs/status/1847182768306053583)
+
 ## Plonky3
 
 SP1の証明システムにはPlonky3を使用しています。
@@ -17,8 +19,6 @@ Plonky3はPlonky2のField size(64bit)を32bitに小さくしたもので、ハ�
 このPlonky3(およびPlonky2)はPlonkishな証明システムにzk-STARKsのFRIコミットメントを適応させたものであり、R1CSとは異なるAIR(Arithmetic Intermediate Representation)という形でステートメントを表現します。
 
 AIRやFRIの仕組みついては[こちらの記事](https://zenn.dev/qope/articles/8d60f77e3a7630#stark%E3%81%A8%E3%81%AF)をご参照ください。記事内で記述されている用に、zk-STARKsはVM friendlyな証明システムと言えるわけです。
-
-
 
 ## アーキテクチャ
 
@@ -42,30 +42,17 @@ AIRやFRIの仕組みついては[こちらの記事](https://zenn.dev/qope/arti
 
 zkEVM開発者側から見るとzkEVMそのものを作る場合に発生する仕様変更への対応コストを削減することができるため、良いこの設計思想だと思います。
 
-
-
-[https://docs.succinct.xyz/onchain-verification/getting-started.html?highlight=gnark#example](https://docs.succinct.xyz/onchain-verification/getting-started.html?highlight=gnark#example)
-
-
-
 ## **on-chain Verification**
 
-SP1ではEthereumなどのスマートコントラクトを使ってProof検証できるようにしている。この機能自体はCircomなどでも広くサポートされている機能であり、一般的にこれは[**Solidity Verifier**](https://docs.succinct.xyz/onchain-verification/solidity-sdk.html)必要とする
+SP1ではEthereumなどのスマートコントラクトを使ってonchainでProof検証できるようにしています。この機能自体はCircomなどでも広くサポートされている機能であり、一般的にこれは[**Solidity Verifier**](https://docs.succinct.xyz/onchain-verification/solidity-sdk.html)必要とします。
 
-SP1が生成するSTARK proofはon-chainで検証するにはコストがかかる。そこで、一つのSTARK proofにした上でそれをSNARK proofとして再帰的に証明するテクニックが用いられている。これによりSTARK proofはgroth16もしくはPlonkのSNARK proofに変換され、on-chainで現実的なコストで検証できるようになる。このように、SNARK proofでラップするテクニックは[Polygon zkEVM](https://docs.polygon.technology/zkEVM/concepts/circom-intro-brief/#what-is-circom)始まり[Intmax](https://github.com/InternetMaximalism/intmax2-mining/blob/main/gnark-server/README.md?plain=1#L3)でも採用されている。
+SP1が生成するSTARK proofはon-chainで検証するにはコストがかかるため、一つのSTARK proofにした上でそれをSNARK proofとして再帰的に証明するテクニックが用いられています。これによりSTARK proofはgroth16もしくはPlonkのSNARK proofに変換され、on-chainで現実的なコストで検証できるようになります。このように、SNARK proofでラップするテクニックは[Polygon zkEVM](https://docs.polygon.technology/zkEVM/concepts/circom-intro-brief/#what-is-circom)始まり[Intmax](https://github.com/InternetMaximalism/intmax2-mining/blob/main/gnark-server/README.md?plain=1#L3)でも採用されています。
 
+on-chain verificationするにあたり、SP1ではgnarkを用いてSNARK proofに変換しています。[gnark](https://github.com/Consensys/gnark)はGroth16/PlonkとそれらのSolidity VerifierをサポートしたGo実装のライブラリでありPolygon zkEVMで採用されている[Circom実装よりも高速](https://docs.gnark.consensys.io/overview#whats-gnark)です。
 
+SP1では[ICICLE](https://github.com/ingonyama-zk/icicle)と呼ばれるGPU-acceleratedなライブラリを[採用](https://github.com/succinctlabs/sp1/blob/dev/crates/recursion/gnark-ffi/go/go.mod#L18)することで、prooving timeのさらなる高速化を目指しています。[この記事](https://medium.com/@ingonyama/user-guide-zk-acceleration-of-gnark-using-icicle-381f4efd13e4)に書いてある通り、gnark+ICICLEの組み合わせは現時点のベストプラクティスに思えます。
 
-ちなみにPlonky2(3)のSolidity Verifier自体は存在する。
-
-* [https://github.com/polymerdao/plonky2-solidity-verifier](https://github.com/polymerdao/plonky2-solidity-verifier)
-* [https://github.com/QEDProtocol/plonky2.5](https://github.com/QEDProtocol/plonky2.5)
-
-on-chain verificationするにあたり、SP1ではgnarkを用いてSNARK proofに変換している。[gnark](https://github.com/Consensys/gnark)はGroth16/PlonkとそれらのSolidity VerifierをサポートしたGo実装のライブラリである。Polygon zkEVMで採用されている[Circom実装よりも高速](https://docs.gnark.consensys.io/overview#whats-gnark)であり、採用に至ったと思われる。
-
-SP1では[ICICLE](https://github.com/ingonyama-zk/icicle)と呼ばれるGPU-acceleratedなライブラリを[採用](https://github.com/succinctlabs/sp1/blob/dev/crates/recursion/gnark-ffi/go/go.mod#L18)することで、prooving timeのさらなる高速化を目指している。[この記事](https://medium.com/@ingonyama/user-guide-zk-acceleration-of-gnark-using-icicle-381f4efd13e4)に書いてある通り、gnark+ICICLEの組み合わせは現時点のベストプラクティスに聞こえる。
-
-しかしSP1(およびPlonky3)はRust実装なのでRust->Goの[FFI](https://ja.wikipedia.org/wiki/Foreign\_function\_interface)を実行する必要があり、オーバーヘッドがProoving Timeに影響するように感じる。
+しかしSP1(およびPlonky3)はRust実装なのでRust->Goの[FFI](https://ja.wikipedia.org/wiki/Foreign\_function\_interface)を実行する必要があり、オーバーヘッドがProoving Timeに影響する可能性がありそうです。
 
 
 
