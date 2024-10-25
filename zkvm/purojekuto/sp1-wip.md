@@ -72,11 +72,12 @@ zkEVM開発者側から見るとzkEVMそのものを作る場合に発生する�
 
 <figure><img src="../../.gitbook/assets/image (3).png" alt=""><figcaption><p><a href="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*aLbVUC4L_EG9i0sctxnplQ.jpeg">https://miro.medium.com/v2/resize:fit:1400/format:webp/1*aLbVUC4L_EG9i0sctxnplQ.jpeg</a></p></figcaption></figure>
 
-この相互通信を可能にしているのが[Logup(Log Derivative Lookup Argument)](https://eprint.iacr.org/2022/1530.pdf)という仕組みです。元々[Lookup Argument](https://eprint.iacr.org/2023/1518)という仕組みがあり、これは証明者が「自分の持つ秘密の値が特定のテーブルの中に存在すること」をゼロ知識証明で示すものです。
+この相互通信を可能にしているのが[Logup(Log Derivative Lookup Argument)](https://eprint.iacr.org/2022/1530.pdf)という仕組みです。これは証明者が「自分の持つ秘密の値が特定のテーブルの中に存在すること」をゼロ知識証明で示すものです。これはzkVMのように複雑で大規模な証明システムにおいて証明サイズ(および証明時間)の大幅な削減につながります。
+
+> 元々[Lookup Argument](https://eprint.iacr.org/2023/1518)という仕組みがあり、Logupはこれを応用しています。\
+> どんなに複雑なCircuitでもLookupベースで構築可能であるというアイデアは[Lookup Singularity](https://zkresear.ch/t/lookup-singularity/65)と呼ばれており、barry whitehatが残した功績の中でも特に大きいものです。
 
 
-
-> Lookup argumentsを応用してどんなに複雑なCircuitでも構築可能であるというアイデアは[Lookup Singularity](https://zkresear.ch/t/lookup-singularity/65)と呼ばれており、barry whitehatが残した功績の中でも特に大きい。
 
 <figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption><p><a href="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*bii5A9CF8-JIgLoSy5oThQ.jpeg">https://miro.medium.com/v2/resize:fit:1400/format:webp/1*bii5A9CF8-JIgLoSy5oThQ.jpeg</a></p></figcaption></figure>
 
@@ -84,13 +85,23 @@ zkEVM開発者側から見るとzkEVMそのものを作る場合に発生する�
 
 
 
-## **on-chain Verification**
+## Aggregation Proving
 
-SP1ではEthereumなどのスマートコントラクトを使ってonchainでProof検証できるようにしています。この機能自体はCircomなどでも広くサポートされている機能であり、一般的にこれは[**Solidity Verifier**](https://docs.succinct.xyz/onchain-verification/solidity-sdk.html)必要とします。
+各かく
+
+各シャードの証明は、シャード内の各チップの論理、チップ上の順列計算、チップ間の相互接続論理が正しいことを証明している。
+
+<figure><img src="../../.gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
 
 SP1が生成するSTARK proofはon-chainで検証するにはコストがかかるため、一つのSTARK proofにした上でそれをSNARK proofとして再帰的に証明するテクニックが用いられています。これによりSTARK proofはgroth16もしくはPlonkのSNARK proofに変換され、on-chainで現実的なコストで検証できるようになります。このように、SNARK proofでラップするテクニックは[Polygon zkEVM](https://docs.polygon.technology/zkEVM/concepts/circom-intro-brief/#what-is-circom)始まり[Intmax](https://github.com/InternetMaximalism/intmax2-mining/blob/main/gnark-server/README.md?plain=1#L3)でも採用されています。
 
-on-chain verificationするにあたり、SP1ではgnarkを用いてSNARK proofに変換しています。[gnark](https://github.com/Consensys/gnark)はGroth16/PlonkとそれらのSolidity VerifierをサポートしたGo実装のライブラリでありPolygon zkEVMで採用されている[Circom実装よりも高速](https://docs.gnark.consensys.io/overview#whats-gnark)です。
+<figure><img src="../../.gitbook/assets/image (6).png" alt=""><figcaption></figcaption></figure>
+
+SP1ではgnarkを用いてSNARK proofに変換しています。[gnark](https://github.com/Consensys/gnark)はGroth16/PlonkとそれらのSolidity VerifierをサポートしたGo実装のライブラリでありPolygon zkEVMで採用されている[Circom実装よりも高速](https://docs.gnark.consensys.io/overview#whats-gnark)です。
+
+## **on-chain Verification**
+
+SP1ではEthereumなどのスマートコントラクトを使ってonchainでProof検証できるようにしています。この機能自体はCircomなどでも広くサポートされている機能であり、一般的にこれは[**Solidity Verifier**](https://docs.succinct.xyz/onchain-verification/solidity-sdk.html)必要とします。
 
 SP1では[ICICLE](https://github.com/ingonyama-zk/icicle)と呼ばれるGPU-acceleratedなライブラリを[採用](https://github.com/succinctlabs/sp1/blob/dev/crates/recursion/gnark-ffi/go/go.mod#L18)することで、prooving timeのさらなる高速化を目指しています。[この記事](https://medium.com/@ingonyama/user-guide-zk-acceleration-of-gnark-using-icicle-381f4efd13e4)に書いてある通り、gnark+ICICLEの組み合わせは現時点のベストプラクティスに思えます。
 
