@@ -38,7 +38,7 @@ SP1のSTARK Proof Systemには[Plonky3](https://github.com/Plonky3/Plonky3)を�
 
 Plonky3はPlonky2のField size(64bit)を32bitに小さくしたもので、ハードウェアフレンドリーなフィールドサイズを持ちながらPlonky2と同等の安全性を保っています。
 
-このように「Field Sizeを小さくしつつ安全性を保つ」というアイデアは後述する[Binius](https://vitalik.eth.limo/general/2024/04/29/binius.html)や[Circle STARK](https://vitalik.eth.limo/general/2024/07/23/circlestarks.html)でも共通しており、昨今のトレンドとも言えます。
+このように**Field Sizeを小さくしつつ安全性を保つ**というアイデアは後述する[Binius](https://vitalik.eth.limo/general/2024/04/29/binius.html)や[Circle STARK](https://vitalik.eth.limo/general/2024/07/23/circlestarks.html)でも共通しており、昨今のトレンドとも言えます。
 
 <figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption><p><a href="https://risczero.com/blog/designing-high-performance-zkVMs">https://risczero.com/blog/designing-high-performance-zkVMs</a></p></figcaption></figure>
 
@@ -60,7 +60,7 @@ VMを構成する要素はChipと呼ばれています。
 
 
 
-ここで注目して欲しいのがPrecompiled Chipsの存在です。\
+この図で注目して欲しいのがPrecompiled Chipsの存在です。\
 これらはEVMで言うところの[Precompiled Contact](https://www.evm.codes/precompiled)のような存在だと考えられます。\
 つまり、SP1は汎用的なzkVMでありながらzkEVMへの応用も見越しているようです。
 
@@ -68,11 +68,21 @@ zkEVM開発者側から見るとzkEVMそのものを作る場合に発生する�
 
 ### Interaction <a href="#id-7432" id="id-7432"></a>
 
-<figure><img src="../../.gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
+任意の命令実行に対し各Chipsは他のChipsと相互にやり取りします。
+
+<figure><img src="../../.gitbook/assets/image (3).png" alt=""><figcaption><p><a href="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*aLbVUC4L_EG9i0sctxnplQ.jpeg">https://miro.medium.com/v2/resize:fit:1400/format:webp/1*aLbVUC4L_EG9i0sctxnplQ.jpeg</a></p></figcaption></figure>
+
+この相互通信を可能にしているのが[Logup(Log Derivative Lookup Argument)](https://eprint.iacr.org/2022/1530.pdf)という仕組みです。元々[Lookup Argument](https://eprint.iacr.org/2023/1518)という仕組みがあり、これは証明者が「自分の持つ秘密の値が特定のテーブルの中に存在すること」をゼロ知識証明で示すものです。
 
 
 
-<figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+> Lookup argumentsを応用してどんなに複雑なCircuitでも構築可能であるというアイデアは[Lookup Singularity](https://zkresear.ch/t/lookup-singularity/65)と呼ばれており、barry whitehatが残した功績の中でも特に大きい。
+
+<figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption><p><a href="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*bii5A9CF8-JIgLoSy5oThQ.jpeg">https://miro.medium.com/v2/resize:fit:1400/format:webp/1*bii5A9CF8-JIgLoSy5oThQ.jpeg</a></p></figcaption></figure>
+
+送信側と受信側は、まず各行のデータに対してランダム線形化を行う。 その結果は各行に対応する多重度を乗算され、各チップに対応する順列に格納される。 レシーバの多重度は負であることに注意。 すべての順列が計算された後、累積される。 送信側と受信側の送受信データが（行の順番を除いて）一致していれば、送信側チップの累積和と受信側チップの累積和は0になることは明らかである。
+
+
 
 ## **on-chain Verification**
 
