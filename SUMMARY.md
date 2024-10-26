@@ -24,6 +24,11 @@
 
 ## zkVM
 
+* [Backgrounds](zkvm/backgrounds/README.md)
+  * [Nova style folding](zkvm/backgrounds/nova-style-folding.md)
+  * [Sumcheck Protocol](zkvm/backgrounds/sumcheck-protocol.md)
+  * [Glossary](zkvm/backgrounds/glossary.md)
+  * [Lookup Argument](zkvm/backgrounds/lookup-argument.md)
 * [動作概要](zkvm/dong-zuo-gai-yao.md)
 * [ゼロ知識証明](zkvm/zero/README.md)
   * [メモリ読み込み・書き込みの一貫性](zkvm/zero/memorimimikimino.md)
