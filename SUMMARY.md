@@ -30,6 +30,7 @@
   * [Lookup Singularity](zkvm/backgrounds/lookup-singularity.md)
   * [Glossary](zkvm/backgrounds/glossary.md)
 * [Building Blocks](zkvm/building-blocks/README.md)
+  * [CycleFold](zkvm/building-blocks/cyclefold.md)
   * [Nova style folding](zkvm/building-blocks/nova-style-folding/README.md)
     * [Nova](zkvm/building-blocks/nova-style-folding/nova.md)
     * [Super Nova](zkvm/building-blocks/nova-style-folding/super-nova.md)
