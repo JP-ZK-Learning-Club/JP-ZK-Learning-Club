@@ -30,7 +30,7 @@
   * [命令の実行](zkvm/zero/no.md)
   * [バイトコードから命令へのデコード](zkvm/zero/baitokdokarahenodekdo.md)
 * [プロジェクト](zkvm/purojekuto/README.md)
-  * [SP1(wip)](zkvm/purojekuto/sp1-wip.md)
+  * [SP1](zkvm/purojekuto/sp1-wip.md)
   * [RISC-Zero](zkvm/purojekuto/risc-zero.md)
   * [Jolt](zkvm/purojekuto/jolt.md)
   * [Valida](zkvm/purojekuto/valida.md)
