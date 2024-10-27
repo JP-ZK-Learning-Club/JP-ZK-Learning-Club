@@ -35,7 +35,7 @@
     * [Nova](zkvm/building-blocks/nova-style-folding/nova.md)
     * [Super Nova](zkvm/building-blocks/nova-style-folding/super-nova.md)
     * [Hyper Nova](zkvm/building-blocks/nova-style-folding/hyper-nova.md)
-    * [Neutron Nova](zkvm/building-blocks/nova-style-folding/neutron-nova.md)
+    * [NeutronNova](zkvm/building-blocks/nova-style-folding/neutronnova.md)
   * [Binius](zkvm/building-blocks/binius.md)
   * [GKR](zkvm/building-blocks/gkr.md)
   * [Circle STARK](zkvm/building-blocks/circle-stark.md)
