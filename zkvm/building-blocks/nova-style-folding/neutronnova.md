@@ -12,7 +12,7 @@ NeutronNovaはzkVMをより効率的に設計するための提案です。既�
 ZeroCheck関係とは、ある多項式f(x, w)があるとき、いくつかの点xにおいて多項式の評価が0であることを証明するための関係 {f, x, w} のことを指します。
 {% endhint %}
 
-1つのLookup関係は4つのGrand Product関係に変換することができ、それらはSumcheck Protocolを用いるかGKR Protocolを用いて効率的に証明することが知られています。NeutronNovaでは、以下のプロセスでLookup関係を畳み込みます。
+NeutronNovaでは、以下のプロセスでLookup関係を畳み込みます。
 
 1. Lookup関係(LKP)を4つのGrand Product関係(GP)に変換
 2. GPをZeroCheck関係(ZC)に変換
