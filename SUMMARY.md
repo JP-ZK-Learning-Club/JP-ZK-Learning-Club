@@ -24,7 +24,8 @@
 
 ## zkVM
 
-* [Projects](zkvm/projects.md)
+* [Projects](zkvm/projects/README.md)
+  * [Page](zkvm/projects/page.md)
 * [Backgrounds](zkvm/backgrounds/README.md)
   * [Folding scheme](zkvm/backgrounds/folding-scheme.md)
   * [Sumcheck Protocol(wip)](zkvm/backgrounds/sumcheck-protocol-wip.md)
