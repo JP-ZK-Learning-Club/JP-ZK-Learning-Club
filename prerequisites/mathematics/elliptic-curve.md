@@ -2,7 +2,7 @@
 
 楕円曲線の歴史は非常に長くて、第二世紀で既にDiophantusの本に記載されています。暗号学に楕円曲線を利用するのは２０世紀の話です。
 
-<figure><img src="../../.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (2) (1).png" alt=""><figcaption></figcaption></figure>
 
 ## 数学の楕円曲線
 
