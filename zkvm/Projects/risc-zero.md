@@ -1,2 +1,0 @@
-# RISC-Zero
-
