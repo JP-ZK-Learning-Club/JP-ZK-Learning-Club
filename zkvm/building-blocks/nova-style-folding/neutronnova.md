@@ -147,3 +147,5 @@ NeutronNovaでは、前者のSumcheck Protocolを用いた方法に照らし合�
 
 * ZC→NSCのような関係の変換にはラグランジュ多項式補完を伴うため、なるべく変換回数が少なく済むように方式を改善する。
 * GrandProductを変換する際のオプションであるGKR Protocolのfoldingバージョンを提案する。
+* NebulaをZeroFoldで畳み込む。
+* ZeroFold/SumFoldの計算を並列化してO(n log d)をO(logn \* logd)オーダーに削減する。
