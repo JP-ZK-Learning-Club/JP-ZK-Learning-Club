@@ -21,6 +21,14 @@
 
 * [Week 2 さらなる暗号技術とSNARKsとSTARKs](page.md)
 * [Week 5 Frontier](week-5-frontier.md)
+* [zkSNARKs](zksnarks/README.md)
+  * [Spartan](zksnarks/spartan.md)
+* [Folding Scheme](folding-scheme/README.md)
+  * [Nova](folding-scheme/nova.md)
+  * [SuperNova](folding-scheme/super-nova.md)
+  * [HyperNova](folding-scheme/hyper-nova.md)
+  * [NeutronNova](folding-scheme/neutronnova.md)
+  * [CycleFold](folding-scheme/cyclefold.md)
 
 ## zkVM
 
@@ -30,12 +38,6 @@
   * [Lookup Singularity](zkvm/backgrounds/lookup-singularity.md)
   * [Glossary](zkvm/backgrounds/glossary.md)
 * [Building Blocks](zkvm/building-blocks/README.md)
-  * [CycleFold](zkvm/building-blocks/cyclefold.md)
-  * [Nova style folding](zkvm/building-blocks/nova-style-folding/README.md)
-    * [Nova](zkvm/building-blocks/nova-style-folding/nova.md)
-    * [SuperNova](zkvm/building-blocks/nova-style-folding/super-nova.md)
-    * [HyperNova](zkvm/building-blocks/nova-style-folding/hyper-nova.md)
-    * [NeutronNova](zkvm/building-blocks/nova-style-folding/neutronnova.md)
   * [Binius](zkvm/building-blocks/binius.md)
   * [GKR](zkvm/building-blocks/gkr.md)
   * [Circle STARK](zkvm/building-blocks/circle-stark.md)
