@@ -16,19 +16,20 @@
 ## PSE-Core-Program
 
 * [Week 1](pse-core-program/week-1.md)
+* [Week 2 さらなる暗号技術とSNARKsとSTARKs](pse-core-program/page.md)
+* [Week 5 Frontier](pse-core-program/week-5-frontier.md)
 
-***
+## zkSNARKs
 
-* [Week 2 さらなる暗号技術とSNARKsとSTARKs](page.md)
-* [Week 5 Frontier](week-5-frontier.md)
-* [zkSNARKs](zksnarks/README.md)
-  * [Spartan](zksnarks/spartan.md)
-* [Folding Scheme](folding-scheme/README.md)
-  * [Nova](folding-scheme/nova.md)
-  * [SuperNova](folding-scheme/super-nova.md)
-  * [HyperNova](folding-scheme/hyper-nova.md)
-  * [NeutronNova](folding-scheme/neutronnova.md)
-  * [CycleFold](folding-scheme/cyclefold.md)
+* [Spartan](zksnarks/spartan.md)
+
+## Folding Scheme
+
+* [Nova](folding-scheme/nova.md)
+* [SuperNova](folding-scheme/super-nova.md)
+* [HyperNova](folding-scheme/hyper-nova.md)
+* [NeutronNova](folding-scheme/neutronnova.md)
+* [CycleFold](folding-scheme/cyclefold.md)
 
 ## zkVM
 
