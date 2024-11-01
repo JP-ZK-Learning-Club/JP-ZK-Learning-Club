@@ -29,7 +29,7 @@
 * [SuperNova](folding-scheme/super-nova.md)
 * [HyperNova](folding-scheme/hyper-nova.md)
 * [NeutronNova](folding-scheme/neutronnova.md)
-* [CycleFold](folding-scheme/cyclefold.md)
+* [CycleFold](zkvm/building-blocks/cyclefold.md)
 
 ## zkVM
 
@@ -38,11 +38,13 @@
   * [Sumcheck Protocol(wip)](zkvm/backgrounds/sumcheck-protocol-wip.md)
   * [Lookup Singularity](zkvm/backgrounds/lookup-singularity.md)
   * [Glossary](zkvm/backgrounds/glossary.md)
+  * [Cycle of Curve(wip)](zkvm/backgrounds/cycle-of-curve-wip.md)
 * [Building Blocks](zkvm/building-blocks/README.md)
   * [Binius](zkvm/building-blocks/binius.md)
   * [GKR](zkvm/building-blocks/gkr.md)
   * [Circle STARK](zkvm/building-blocks/circle-stark.md)
   * [Lookup Argument](zkvm/building-blocks/lookup-argument.md)
+  * [Cycle Fold](zkvm/building-blocks/cycle-fold.md)
 * [動作概要](zkvm/dong-zuo-gai-yao.md)
 * [ゼロ知識証明](zkvm/zero/README.md)
   * [メモリ読み込み・書き込みの一貫性](zkvm/zero/memorimimikimino.md)
