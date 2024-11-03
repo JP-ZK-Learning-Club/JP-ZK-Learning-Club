@@ -1,4 +1,4 @@
-# Cycle of Curve(wip)
+# Cycle of Curves
 
 ## モチベーション
 
@@ -6,11 +6,11 @@
 
 このように異なるFieldにまたがる計算を**Non-Native Field Arithmetic**と呼んだりします。
 
-Paring baseのSNARK、特にHalo2やNovaなどIVCを構成する際にはProver側で生成したF\_p上のProofはVerifier側ではF\_qも使って計算する必要があり、この部分の制約を減らすことが重要になってきます。
+Pedersen Commitmentを使うSNARK、特にHalo2やNovaなどIVCを構成する際にはProver側で生成したF\_p上のProofはVerifier側ではF\_qも使って計算する必要があり、この部分の制約を減らすことが重要になってきます。
 
 ## アイデア
 
-この問題に対する「異なる二つの楕円曲線上で相互に証明・検証し合う」という解法がCycle of Curveです
+この問題に対する「異なる二つの楕円曲線上で相互に証明・検証し合う」という解法がCycle of Curvesです
 
 ここで二つの楕円曲線のペア(E1,E2)は以下のような特徴を有しています。
 
@@ -19,11 +19,19 @@ Paring baseのSNARK、特にHalo2やNovaなどIVCを構成する際にはProver�
 
 そしてE\_1上の回路のverifierをE\_2上に、E\_2上の回路のverifierをE\_1上に実装することで異なるFieldで発生するスカラー演算を回避しています。
 
+元のアイデアは[BCTV14](https://eprint.iacr.org/2014/595)にて提唱されました。
+
 ## Halo2
 
-この手法はZcashのHalo2でも採用されており、Pallas curveとVesta curveによって以下のように構成されています。
+この手法はZcashのHalo2でも採用されており、Pallas curveとVesta curveという二つの楕円曲線を用いて実現されています。つまり、Pallas curveのScaler FieldがVesta curveのBase Field、Vesta curveのScaler FieldがPallas curveのBase Fieldになります。
 
 <figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption><p><a href="https://zcash.github.io/halo2/background/curves.html?highlight=curve#cycles-of-curves">https://zcash.github.io/halo2/background/curves.html?highlight=curve#cycles-of-curves</a></p></figcaption></figure>
+
+
+
+{% hint style="info" %}
+todo: accumulatorについて言及する
+{% endhint %}
 
 以下のようなパラーメータになっています。
 
@@ -32,15 +40,21 @@ Paring baseのSNARK、特にHalo2やNovaなどIVCを構成する際にはProver�
 * Ep : y^2 = x^3 + 5 over GF(p) of order q, called Pallas;
 * Eq : y^2 = x^3 + 5 over GF(q) of order p, called Vesta;
 
-ちなみに二つの曲線を文字って[Pasta Curve](https://github.com/zcash/pasta)と呼ばれています。
+ちなみに二つの曲線を文字ってPasta Curvesと呼ばれています。
 
 ## Nova
 
-ではNovaなどのFoldingではどうなっているのでしょう？
+NovaでもPasta Curvesを用いたCycle of curvesを採用しています。
 
-...
+以下の図はNovaの表記をベースに抽象化したCycle of curvesのフローです。
 
-[https://www.zksecurity.xyz/blog/posts/nova-attack/](https://www.zksecurity.xyz/blog/posts/nova-attack/)
+<figure><img src="../../.gitbook/assets/スクリーンショット 2024-11-03 20.34.30.png" alt=""><figcaption><p>made by author</p></figcaption></figure>
+
+元々提案されていた[Nova](https://eprint.iacr.org/2021/370)は単一の楕円曲線上で構築されていましたが効率向上のためにCycle of Curvesを使用するように変更されました。当初この変更は実装内でのみ記述されていたため安全性は証明されておらず[脆弱性](https://eprint.iacr.org/2023/969.pdf)が指摘されました。現在では安全性証明が証明された上でCycle of Curvesを用いて効率性を獲得しています。
+
+この脆弱性については[こちらの記事](https://www.zksecurity.xyz/blog/posts/nova-attack/)にて解説されているので興味があればご覧ください。
+
+
 
 ## 参照資料
 

@@ -38,7 +38,7 @@
   * [Sumcheck Protocol(wip)](zkvm/backgrounds/sumcheck-protocol-wip.md)
   * [Lookup Singularity](zkvm/backgrounds/lookup-singularity.md)
   * [Glossary](zkvm/backgrounds/glossary.md)
-  * [Cycle of Curve(wip)](zkvm/backgrounds/cycle-of-curve-wip.md)
+  * [Cycle of Curves](zkvm/backgrounds/cycle-of-curves.md)
 * [Building Blocks](zkvm/building-blocks/README.md)
   * [Binius](zkvm/building-blocks/binius.md)
   * [GKR](zkvm/building-blocks/gkr.md)
