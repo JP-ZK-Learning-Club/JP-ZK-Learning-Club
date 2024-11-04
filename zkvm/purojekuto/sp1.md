@@ -50,7 +50,7 @@ VM を構成する要素は Chip と呼ばれています。
 
 ここでの Chip とはハードウェア的な意味ではありません。特定の機能の効率的な組み込み済み zk 実装と捉えるとわかりやすいかと思います。Halo2 に馴染みがある方であれば、ピンと来るかもです。そうではない人は[この記事](https://trapdoortech.medium.com/zero-knowledge-proof-a-guide-to-halo2-source-code-9be0cf792f18)を読むとイメージつくかと思います。
 
-<figure><img src="../../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 各 chip は MachineAir Trait と依存関係を持っており、STARK Machine における実行内容を AIR のステートメントとして変換する処理が行われます。
 
@@ -82,7 +82,7 @@ todo:Logup のページを書き上げ、リンクを貼る。
 todo:permutation のページを書き上げ、リンクを貼る。
 {% endhint %}
 
-<figure><img src="../../.gitbook/assets/image (1) (1).png" alt=""><figcaption><p><a href="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*bii5A9CF8-JIgLoSy5oThQ.jpeg">https://miro.medium.com/v2/resize:fit:1400/format:webp/1*bii5A9CF8-JIgLoSy5oThQ.jpeg</a></p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption><p><a href="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*bii5A9CF8-JIgLoSy5oThQ.jpeg">https://miro.medium.com/v2/resize:fit:1400/format:webp/1*bii5A9CF8-JIgLoSy5oThQ.jpeg</a></p></figcaption></figure>
 
 ## Memory consistency <a href="#id-49df" id="id-49df"></a>
 

@@ -25,7 +25,7 @@ Pedersen Commitmentを使うSNARK、特にHalo2やNovaなどIVCを構成する�
 
 この手法はZcashのHalo2でも採用されており、Pallas curveとVesta curveという二つの楕円曲線を用いて実現されています。つまり、Pallas curveのScaler FieldがVesta curveのBase Field、Vesta curveのScaler FieldがPallas curveのBase Fieldになります。
 
-<figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption><p><a href="https://zcash.github.io/halo2/background/curves.html?highlight=curve#cycles-of-curves">https://zcash.github.io/halo2/background/curves.html?highlight=curve#cycles-of-curves</a></p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1).png" alt=""><figcaption><p><a href="https://zcash.github.io/halo2/background/curves.html?highlight=curve#cycles-of-curves">https://zcash.github.io/halo2/background/curves.html?highlight=curve#cycles-of-curves</a></p></figcaption></figure>
 
 
 

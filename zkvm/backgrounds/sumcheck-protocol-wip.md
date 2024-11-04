@@ -34,7 +34,7 @@ $$
 
 ここでは各変数がbooleanをとっているように、先述のMLEにおける検証プロトコルを使っている。 全体としては以下のようになっている。&#x20;
 
-<figure><img src="../../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ぱっと見では分かりづらいので、例を持って示す。
 
