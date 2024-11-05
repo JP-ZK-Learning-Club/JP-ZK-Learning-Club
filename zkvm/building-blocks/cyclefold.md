@@ -38,7 +38,7 @@ NovaにおけるCycle of curvesはインスタンス全てを両方の楕円曲�
 
 そこでCycle Foldでは以下のように検証に必要な部分のみSecondary curve E2に外注しています。
 
-<figure><img src="../../.gitbook/assets/image (2).png" alt=""><figcaption><p><a href="https://eprint.iacr.org/2023/1192">https://eprint.iacr.org/2023/1192</a></p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (2) (1).png" alt=""><figcaption><p><a href="https://eprint.iacr.org/2023/1192">https://eprint.iacr.org/2023/1192</a></p></figcaption></figure>
 
 この図はHyper NovaのFoldingフローです。詳細は以下のようになります。
 

@@ -34,8 +34,8 @@
 ## zkVM
 
 * [Backgrounds](zkvm/backgrounds/README.md)
+  * [Multi Linear extension(MLE)](zkvm/backgrounds/multi-linear-extension-mle.md)
   * [Folding scheme](zkvm/backgrounds/folding-scheme.md)
-  * [Sumcheck Protocol(wip)](zkvm/backgrounds/sumcheck-protocol-wip.md)
   * [Lookup Singularity](zkvm/backgrounds/lookup-singularity.md)
   * [Cycle of Curves](zkvm/backgrounds/cycle-of-curves.md)
   * [Extension Field](zkvm/backgrounds/extension-field.md)
@@ -45,6 +45,7 @@
   * [GKR](zkvm/building-blocks/gkr.md)
   * [Circle STARK](zkvm/building-blocks/circle-stark.md)
   * [Lookup Argument](zkvm/building-blocks/lookup-argument.md)
+  * [Sum-check Protocol](zkvm/building-blocks/sumcheck-protocol-wip.md)
 * [動作概要](zkvm/dong-zuo-gai-yao.md)
 * [ゼロ知識証明](zkvm/zero/README.md)
   * [メモリ読み込み・書き込みの一貫性](zkvm/zero/memorimimikimino/README.md)

@@ -14,7 +14,7 @@ description: SP1はRISC-V の命令セットをサポートしているzkVMで�
 
 なぜ STARK Proof System なのかは次の項で説明します。
 
-<figure><img src="../../.gitbook/assets/image (2) (1).png" alt=""><figcaption><p><a href="https://risczero.com/blog/designing-high-performance-zkVMs#aa7a0ec142e844d899a4482066cf33f1">https://risczero.com/blog/designing-high-performance-zkVMs#aa7a0ec142e844d899a4482066cf33f1</a></p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (2) (1) (1).png" alt=""><figcaption><p><a href="https://risczero.com/blog/designing-high-performance-zkVMs#aa7a0ec142e844d899a4482066cf33f1">https://risczero.com/blog/designing-high-performance-zkVMs#aa7a0ec142e844d899a4482066cf33f1</a></p></figcaption></figure>
 
 もう少し深く見ていくと下図のように Rust のプログラムをコンパイルして得られる[ELF](https://ja.wikipedia.org/wiki/Executable\_and\_Linkable\_Format) File を元に Excution が始まります。
 
@@ -36,7 +36,7 @@ Plonky3 は Plonky2 の Field size(64bit)を 32bit に小さくしたもので�
 
 このように**Field Size を小さくしつつ安全性を保つ**というアイデアは[Binius](https://vitalik.eth.limo/general/2024/04/29/binius.html)や[Circle STARK](https://vitalik.eth.limo/general/2024/07/23/circlestarks.html)でも共通しており、昨今のトレンドとも言えます。
 
-<figure><img src="../../.gitbook/assets/image (2).png" alt=""><figcaption><p><a href="https://risczero.com/blog/designing-high-performance-zkVMs">https://risczero.com/blog/designing-high-performance-zkVMs</a></p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (2) (1).png" alt=""><figcaption><p><a href="https://risczero.com/blog/designing-high-performance-zkVMs">https://risczero.com/blog/designing-high-performance-zkVMs</a></p></figcaption></figure>
 
 この Plonky3(および Plonky2)は Plonkish な証明システムに zk-STARKs の FRI コミットメントを適応させたものであり、R1CS とは異なる AIR(Arithmetic Intermediate Representation)という形でステートメントを表現します。
 
@@ -50,7 +50,7 @@ VM を構成する要素は Chip と呼ばれています。
 
 ここでの Chip とはハードウェア的な意味ではありません。特定の機能の効率的な組み込み済み zk 実装と捉えるとわかりやすいかと思います。Halo2 に馴染みがある方であれば、ピンと来るかもです。そうではない人は[この記事](https://trapdoortech.medium.com/zero-knowledge-proof-a-guide-to-halo2-source-code-9be0cf792f18)を読むとイメージつくかと思います。
 
-<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 各 chip は MachineAir Trait と依存関係を持っており、STARK Machine における実行内容を AIR のステートメントとして変換する処理が行われます。
 
@@ -66,7 +66,7 @@ zkEVM 開発者側から見ると zkEVM そのものを作る場合に発生す�
 
 任意の命令実行に対し各 Chips は他の Chips と相互にやり取りする場合あり、CpuChip を中心にこの相互接続関係を制約しています。
 
-<figure><img src="../../.gitbook/assets/image (3).png" alt=""><figcaption><p><a href="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*aLbVUC4L_EG9i0sctxnplQ.jpeg">https://miro.medium.com/v2/resize:fit:1400/format:webp/1*aLbVUC4L_EG9i0sctxnplQ.jpeg</a></p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (3) (1).png" alt=""><figcaption><p><a href="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*aLbVUC4L_EG9i0sctxnplQ.jpeg">https://miro.medium.com/v2/resize:fit:1400/format:webp/1*aLbVUC4L_EG9i0sctxnplQ.jpeg</a></p></figcaption></figure>
 
 ではどのように相互通信の順列を保証しているのでしょうか？
 
@@ -82,7 +82,7 @@ todo:Logup のページを書き上げ、リンクを貼る。
 todo:permutation のページを書き上げ、リンクを貼る。
 {% endhint %}
 
-<figure><img src="../../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption><p><a href="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*bii5A9CF8-JIgLoSy5oThQ.jpeg">https://miro.medium.com/v2/resize:fit:1400/format:webp/1*bii5A9CF8-JIgLoSy5oThQ.jpeg</a></p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption><p><a href="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*bii5A9CF8-JIgLoSy5oThQ.jpeg">https://miro.medium.com/v2/resize:fit:1400/format:webp/1*bii5A9CF8-JIgLoSy5oThQ.jpeg</a></p></figcaption></figure>
 
 ## Memory consistency <a href="#id-49df" id="id-49df"></a>
 
