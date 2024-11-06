@@ -47,7 +47,7 @@ Folding schemesでは、構造sを持つ関係Rの2つのインスタンスを1�
 
 &#x20;$$R_1$$と、$$R'_2$$に基づくコミット関係$$R_2$$ を考えた時、決定論的な $$V$$を持つmulti-folding scheme $$( Gen , Enc , 𝑃 , 𝑉 )$$ が、以下のプロパティを満たす場合にNIVC互換であるとします。
 
-* NP-completness:　任意の算術回路 $$F$$のinput $$x$$, $$w$$、output $$y$$に対して、構造・インスタンス・witness のタプル$$( s _2 , u , w )$$ が $$R'_2$$​ に属し、 $$F(x,w)=y$$ が成り立つ。
+* NP-completness:　任意の算術回路 $$F$$のinput $$x$$, 非決定的な入力$$w$$、output $$y$$に対して、構造・インスタンス・witness のタプル$$( s _2 , u , w )$$ が $$R'_2$$​ に属し、 $$F(x,w)=y$$ が成り立つ。
 * Partial functions:　$$\text{compat}(s_1 ​ ,s_2 ​ )=1$$を満たす$$compat(s_1 ​ ,s_2 ​ )=1$$$$(s_1, s_2)$$を生成する$$\text{enc}_{str}(F)$$と、$$R'_2$$ のinstance $$u$$を生成する$$\text{enc}_{inst}((x, y))$$が存在し、ある$$R'_2$$のwitness $$w$$に対して$$(s_2, u,w) = \text{enc}(F,(x, y), w)$$となる。
 * Monotonicity:　任意の算術回路 ( F ) と ( G ) について、もし $$|F| \leq |G|$$であれば、$$|\text{enc}_{\text{str}}(F)| \leq |\text{enc}_{\text{str}}(G)|$$ が成り立つ。ここで、$$|F|$$は $$F$$のゲートの総数を表し、$$|\text{enc}_{\text{str}}(F)|$$ _は、_$$\text{enc}_{\text{str}}(F)$$内の制約の数を示す。
 * Default instances:　あるデフォルトインスタンス $$(u_{\bot}, w_{\bot})$$ が存在し、任意の公開パラメータ $$\text{pp}$$と構造 $$\text{s}$$に対して、$$(\text{pp}, s, u_{\bot}, w_{\bot}) \in R_1$$ が成り立つ。
