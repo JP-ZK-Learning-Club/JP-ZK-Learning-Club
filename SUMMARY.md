@@ -31,6 +31,11 @@
 * [NeutronNova](folding-scheme/neutronnova.md)
 * [CycleFold](zkvm/building-blocks/cyclefold.md)
 
+## Lookup Argument
+
+* [概要とLasso以前の提案](lookup-argument/tolassono.md)
+* [Lasso](lookup-argument/lasso.md)
+
 ## zkVM
 
 * [Backgrounds](zkvm/backgrounds/README.md)
@@ -44,7 +49,6 @@
   * [Binius](zkvm/building-blocks/binius.md)
   * [GKR](zkvm/building-blocks/gkr.md)
   * [Circle STARK](zkvm/building-blocks/circle-stark.md)
-  * [Lookup Argument](zkvm/building-blocks/lookup-argument.md)
   * [Sum-check Protocol](zkvm/building-blocks/sumcheck-protocol-wip.md)
 * [動作概要](zkvm/dong-zuo-gai-yao.md)
 * [ゼロ知識証明](zkvm/zero/README.md)
