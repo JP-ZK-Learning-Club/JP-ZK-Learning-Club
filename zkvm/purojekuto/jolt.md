@@ -55,6 +55,8 @@ pub fn main() {
 3. 命令を実行
 4. 実行結果をレジスタ/メモリのデータ領域に書き込み
 
+Proveの流れを可視化した図: [https://miro.com/app/board/uXjVLHocNvY=/?share\_link\_id=405357987329](https://miro.com/app/board/uXjVLHocNvY=/?share\_link\_id=405357987329)
+
 ### Joltのコンポーネント
 
 VMにおける上記の(1)\~(4)の処理が正しく行われていることを証明するために、4つのコンポーネントがあります。
