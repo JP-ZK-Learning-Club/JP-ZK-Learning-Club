@@ -149,3 +149,7 @@ NeutronNovaでは、前者のSumcheck Protocolを用いた方法に照らし合�
 * GrandProductを変換する際のオプションであるGKR Protocolのfoldingバージョンを提案する。
 * NebulaをZeroFoldで畳み込む。
 * ZeroFold/SumFoldの計算を並列化してO(n log d)をO(logn \* logd)オーダーに削減する。
+
+### Reference
+
+* [https://eprint.iacr.org/2024/1606](https://eprint.iacr.org/2024/1606)

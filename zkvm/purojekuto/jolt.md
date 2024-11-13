@@ -4,13 +4,11 @@ description: Lookup Tableを利用したzkVM
 
 # Jolt
 
-
-
 Jolt (Just one Lookup Table)はa16z CryptoのArasu Arun、Srinath Setty、Justin Thalerによって開発されたRISC-V命令セットアーキテクチャ用のゼロ知識仮想マシン(zkVM)です。SP1やRISC-Zeroと比べ実装がシンプルです。
 
 JoltのコアアイデアはルックアップテーブルとSumcheck Protocolで、それらを組み合わせることで回路サイズを抑え、証明を高速化しています。
 
-#### JoltにおけるRustプログラム実行と証明生成の流れ
+### JoltにおけるRustプログラム実行と証明生成の流れ
 
 Joltが証明するRISC-Vのプログラムは、Jolt自身によりコンパイルされ、内部のループでインタプリタ実行されます。ここで重要なのは、実行トレースを取る部分まではゼロ知識証明は使わず、普通のRustプログラムとして書かれており、最後の実行トレースの状態遷移を証明だけがゼロ知識証明です。
 
@@ -57,7 +55,9 @@ pub fn main() {
 3. 命令を実行
 4. 実行結果をレジスタ/メモリのデータ領域に書き込み
 
-#### Joltのコンポーネント
+Proveの流れを可視化した図: [https://miro.com/app/board/uXjVLHocNvY=/?share\_link\_id=405357987329](https://miro.com/app/board/uXjVLHocNvY=/?share\_link\_id=405357987329)
+
+### Joltのコンポーネント
 
 VMにおける上記の(1)\~(4)の処理が正しく行われていることを証明するために、4つのコンポーネントがあります。
 
@@ -68,13 +68,17 @@ VMにおける上記の(1)\~(4)の処理が正しく行われていることを�
 
 上記を3つの証明にして、それを命令ごとに繰り返しています。さらに、命令毎の状態の遷移は、オフラインメモリチェックにより一貫性が保たれます。
 
+<figure><img src="../../.gitbook/assets/figure2.png" alt=""><figcaption><p><a href="https://jolt.a16zcrypto.com/how/architecture.html">https://jolt.a16zcrypto.com/how/architecture.html</a></p></figcaption></figure>
+
+<figure><img src="../../.gitbook/assets/fetch_decode_execute (2).png" alt=""><figcaption><p><a href="https://jolt.a16zcrypto.com/how/architecture.html">https://jolt.a16zcrypto.com/how/architecture.html</a></p></figcaption></figure>
+
 [アーキテクチャに関する詳細はこちら](https://jolt.a16zcrypto.com/how/architecture.html)を参考にしてください。
 
 Joltの一番の工夫は命令のルックアップテーブルを分解可能(decomposable)にし、サブテーブルに分割したことです。これにより、命令のサイズにかかわらずテーブルのサイズを一定にすることが可能になりました。
 
 [https://a16zcrypto.com/posts/article/building-on-lasso-and-jolt/](https://a16zcrypto.com/posts/article/building-on-lasso-and-jolt/)
 
-#### Joltの実装
+### Joltの実装
 
 ソースコードをビルドしてローカルでSHA-3を実行してみたところ、実行時間はsetupが20s、proveが2s、verifyが0.5s程度でした。メモリ利用料は3GBほどでした。setupでの実行内容にはcommitmentサイズを定義、preprocess、commitment schemeのsetupなどがあり、ほとんどの時間はcommitment schemeのsetupに費やされていました。
 
@@ -84,7 +88,9 @@ Joltは現在は[32bitの整数にのみ対応](https://a16zcrypto.com/posts/art
 
 また、[ブログによると](https://a16zcrypto.com/posts/article/building-jolt/)Joltはオーバーヘッドが 6 桁未満で、RISC-ZeroやSP1(8コア)よりも高速です。
 
-#### Joltの今後の開発ロードマップ
+<figure><img src="../../.gitbook/assets/zkVM-Proving-Time-vs-Jolt.svg" alt=""><figcaption><p><a href="https://a16zcrypto.com/posts/article/building-jolt/">https://a16zcrypto.com/posts/article/building-jolt/</a></p></figcaption></figure>
+
+### Joltの今後の開発ロードマップ
 
 [https://jolt.a16zcrypto.com/tasks.html](https://jolt.a16zcrypto.com/tasks.html)
 
@@ -99,7 +105,7 @@ Joltは現在は[32bitの整数にのみ対応](https://a16zcrypto.com/posts/art
   * [https://a16zcrypto.com/posts/article/faqs-on-jolts-initial-implementation/](https://a16zcrypto.com/posts/article/faqs-on-jolts-initial-implementation/)
 * ...
 
-#### 参考文献
+### 参考文献
 
 * [https://eprint.iacr.org/2023/1217](https://eprint.iacr.org/2023/1217)
 * [https://jolt.a16zcrypto.com/](https://jolt.a16zcrypto.com/)
