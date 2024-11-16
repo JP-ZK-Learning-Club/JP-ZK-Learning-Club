@@ -45,6 +45,7 @@
   * [Cycle of Curves](zkvm/backgrounds/cycle-of-curves.md)
   * [Extension Field](zkvm/backgrounds/extension-field.md)
   * [Glossary](zkvm/backgrounds/glossary.md)
+  * [CCS](zkvm/backgrounds/ccs.md)
 * [Building Blocks](zkvm/building-blocks/README.md)
   * [Binius](zkvm/building-blocks/binius.md)
   * [GKR](zkvm/building-blocks/gkr.md)
