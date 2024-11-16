@@ -28,13 +28,57 @@ $$f(x)$$には次数が1次以上の項が含まれているので、$$f$$を$$x
 
 ## CCSをMLEへ拡張
 
+### CCSの定義
+
 CCSでは、次の式を満たす$$c_i$$, $$S_i$$, $$M_j$$, $$z$$が必要となります。$$M$$は、R1CSでの$$A$$,$$B$$,$$C$$の行列に対応し、$$S$$はアダマール積を行う行列のグループ、$$c$$は定数項、$$z$$はinputやwitnessなどです。
 
 <figure><img src="../.gitbook/assets/Screenshot 2024-11-16 at 18.54.58.png" alt=""><figcaption></figcaption></figure>
 
-この記事では、次のような、R1CSをCCSへ変換した形を扱っていきますので、$$M$$は$$[M_1, M_2, M_3]$$、$$S = [\{1,2\}, \{3\}]$$となります。
+### R1CSからCCSへ
+
+この記事では、次のような、R1CSをCCSへ変換した形を扱っていきますので、$$M$$は$$[M_1, M_2, M_3]$$、$$S = [\{1,2\}, \{3\}]$$となります。また、$$M_1$$,$$M_2$$,$$M_3$$は、R1CSの$$A$$,$$B$$,$$C$$に対応しますが、MLEにするには行と列が2の倍数である必要があるので、4行目がゼロベクトルでパディングされています。
 
 <figure><img src="../.gitbook/assets/Screenshot 2024-11-16 at 19.08.24.png" alt=""><figcaption></figcaption></figure>
+
+### CCSからsum-checkへ
+
+次の行列の演算を含む式をmultilinear polynomialにするには、まず$$M_i$$と$$z$$を多項式として表現する必要があります。
+
+<figure><img src="../.gitbook/assets/Screenshot 2024-11-16 at 21.43.12.png" alt=""><figcaption></figcaption></figure>
+
+$$M_i$$は$$m \times n$$なので、$$M_i$$を$$M_i(m,n)$$: $$\mathbb{F}^2 \rightarrow \{0,1\}$$の多項式として考えます。$$m,n$$を指定すれば、それに対応する$$\{0,1\}$$が返ってきます。
+
+これをMLEにするので、次のように$$\tilde{eq}$$を使って$$\tilde{M_i}(X, Y),\tilde{z}(Y)$$を定義します。HyperNovaでは、$$m=s, n=s'$$です。
+
+<figure><img src="../.gitbook/assets/Screenshot 2024-11-16 at 22.03.23.png" alt=""><figcaption></figcaption></figure>
+
+したがって、$$M_i \cdot z$$のmultivariate polynomialは、次のようになります。このとき、$$Y$$は全ての$$y \in \{0,1\}^{s'}$$で展開しておきます。
+
+<figure><img src="../.gitbook/assets/Screenshot 2024-11-16 at 22.08.53.png" alt=""><figcaption></figcaption></figure>
+
+$$M$$は3つありますので、それらを合わせると、次のような多項式$$G$$を定義できます。
+
+<figure><img src="../.gitbook/assets/Screenshot 2024-11-16 at 22.14.53.png" alt=""><figcaption></figcaption></figure>
+
+ここで注意すべきは、$$G$$の内部で多項式を掛けてしまっているので、multilinear polynomialではないということです。そこで、$$\tilde{eq}$$を使ってMLEにしていきます。
+
+<figure><img src="../.gitbook/assets/Screenshot 2024-11-16 at 22.16.52.png" alt=""><figcaption></figcaption></figure>
+
+### Schwartz-Zippel lemmaでΣを減らす
+
+全ての$$x \in \{0,1\}^2$$で$$G(x) = 0$$となることを確かめられれば、CCSの制約が成り立っていることを確認できます。Schwartz-Zippel lemmaにより、$$h(X1,X2)=0$$ となる確率が高いと分かります。
+
+次の式では、$$(\beta_1, \beta_2)$$と一致する項が$$\tilde{eq}$$によって残され、それが$$0$$であることが確かめられます。
+
+<figure><img src="../.gitbook/assets/Screenshot 2024-11-16 at 22.34.17.png" alt=""><figcaption></figcaption></figure>
+
+これを利用すると、$$\sum$$を減らすことができます。この$$Q(X_1, X_2)$$をsum-check protocolで証明していきます。
+
+<figure><img src="../.gitbook/assets/Screenshot 2024-11-16 at 22.34.54.png" alt=""><figcaption></figcaption></figure>
+
+## Sum-check protocol
+
+
 
 ### Reference
 
