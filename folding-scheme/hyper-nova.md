@@ -129,6 +129,36 @@ Proverは次のように、それぞれのsum-checkをVerifierから渡された
 
 <figure><img src="../.gitbook/assets/Screenshot 2024-11-17 at 22.47.17.png" alt=""><figcaption></figcaption></figure>
 
+#### Round 1
+
+batch inner sum-checkもouter sum-checkと同様に、それぞれの変数に対しての一変数多項式をVerifierに送信し、再帰的に証明していきます。Round1では、Proverは$$Y_1$$以外の変数を全ての$$y$$について評価し展開した$$f_1(Y_1)$$を主張する$$q_1(Y_1)$$をVerifierに渡します。
+
+<figure><img src="../.gitbook/assets/Screenshot 2024-11-17 at 23.35.34.png" alt=""><figcaption></figcaption></figure>
+
+$$f_1(Y_1)$$を受け取ったVerifierは、$$f_1(0) + f_1(1) = T$$ をすることで、Proverが主張するランダム線形結合された値 $$T$$ を導けることを確認します。
+
+#### Round 2
+
+次に、Verifierから受け取った$$r_1 '$$で$$Y_1$$を評価し、$$Y_3$$を$$0,1$$で評価した次の一変数多項式$$f_2(Y_2)$$を主張する$$q_2(Y_2)$$をVerifierに送信します。
+
+<figure><img src="../.gitbook/assets/Screenshot 2024-11-17 at 23.45.03.png" alt=""><figcaption></figcaption></figure>
+
+$$q_2(x)$$を受け取ったVerifierは、$$q_1(r_1) = q_2(0) + q_2(1)$$ であることを確かめます。
+
+$$q_1$$内では$$Y_2$$が$$0,1$$で既に評価され展開されているので、$$r_1 '$$で既に$$Y_1$$が評価されている$$q_2$$を、$$0,1$$で評価した合計は、$$q_1(r_1 ')$$と同じになるはずです。
+
+#### Round 3
+
+$$Y_3$$についての一変数多項式を作り、Verifierに送信します。
+
+<figure><img src="../.gitbook/assets/Screenshot 2024-11-17 at 23.52.44.png" alt=""><figcaption></figcaption></figure>
+
+Verifierは$$s_2(r_2 ') = s_3(0) + s_3(1)$$を確かめます。最終的にVerifierは次のことを確かめられます。
+
+<figure><img src="../.gitbook/assets/Screenshot 2024-11-17 at 23.56.37.png" alt=""><figcaption></figcaption></figure>
+
+### Final check
+
 
 
 ### Reference
