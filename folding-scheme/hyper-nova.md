@@ -78,7 +78,50 @@ $$M$$は3つありますので、それらを合わせると、次のような�
 
 ## Sum-check protocol
 
+上の$$Q(x)$$を使って、sum-check protocolで$$G(x) = 0$$を証明していくのだが、ProverとVerifierは次の2種類のsum-checkを行うことになる。
 
+* Outer sum-check: $$G(x) = 0$$ for all $$x \in \{0,1\}^2$$
+* Inner sum-check:  $$T_j = \sum_{y \in \{0,1\}^3} \tilde{M_j}(r, y) \cdot \tilde{z}(y)$$
+
+Outer sum-checkを行うときに、$$G$$の中にもsum-checkの形が現れるので、これもinner sum-checkとして別に行う。
+
+sum-check protocolでは、多重線形多項式のそれぞれの変数に対して一変数多項式を作り、再帰的に証明と検証をしています。
+
+### Outer sum-check
+
+#### Round 1
+
+ProverはVerifierに次の$$Q_1$$を主張する一変数多項式$$s_1(X_1)$$を送信します。
+
+$$
+Q_1(X_1) = \sum_{x_2 \in \{0,1\}}Q(X_1, x_2)
+$$
+
+$$s_1(X_1)$$を受け取ったVerifierは、$$s_1(0) + s_1(1) = 0$$ となることを確認します。
+
+$$s_1$$内では、$$Q(X_1, X_2)$$の$$X_2$$を既に$$0,1$$で評価されているはずなので、$$s_1$$を$$0,1$$で評価して合計が$$0$$であること確認することは、$$Q(x) = 0$$. $$\forall{x} \in \{0,1\}^2$$を確認したことと同じになります。
+
+#### Round 2
+
+次に、Verifierに$$s_1(r_1) := \sum_{x_2 \in \{0,1\}} Q(r_1, x_2)$$であつことを主張するために、$$Q_2(X_2) := Q(r_1, X_2)$$次の$$Q_2(X_2)$$を主張する$$s_2(x)$$をVerifierに渡します。
+
+$$
+Q_2(X_2) := Q(r_1, X_2)
+$$
+
+$$s_2(x)$$を受け取ったVerifierは、$$s_1(r_1) = s_2(0) + s_2(1)$$ であることを確かめます。
+
+$$s_1$$内では$$X_2$$が$$0,1$$で既に評価され展開されているので、$$r_1$$で既に$$X_1$$が評価されている$$s_2$$を、$$0,1$$で評価した合計は、$$s_1(r_1)$$と同じになるはずです。
+
+ここまでで、Verifierは$$s_1(x)$$と$$s_2(x)$$が確かに$$Q(X_1, X_2)$$から生成されたことが確認できたので、$$s_2(r_2)$$によって$$Q$$を二つのランダムな点で評価することができます。$$Q(r_1, r_2) = 0$$であることは、高確率で$$0 = G(x). \forall{x} \in \{0,1\}^2.$$ となります。
+
+<figure><img src="../.gitbook/assets/Screenshot 2024-11-17 at 12.30.31.png" alt=""><figcaption></figcaption></figure>
+
+#### 内部に含まれるsum-checkは別で証明する
+
+Verifierが$$s_1(x), s_2(x)$$を評価するとき、内部には$$\sum_{y \in \{0,1\}^3} \tilde{M}i ((X_1, X_2), y) \cdot \tilde{z}(y)$$の形が複数現れ、これはVerifierが直接計算しなければなりません。この計算も同じくsum-check protocolでVerifierの計算量を減らすことができます。
+
+### Inner sum-check
 
 ### Reference
 
