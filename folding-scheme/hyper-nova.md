@@ -123,6 +123,14 @@ Verifierが$$s_1(x), s_2(x)$$を評価するとき、内部には$$\sum_{y \in \
 
 ### Inner sum-check
 
+$$G((X_1, X_2))$$の内部で行われるsum-checkは複数あるので、複数のsum-checkを避けるため、sum-checkを束ねたbatch inner sum-checkを行います。
+
+Proverは次のように、それぞれのsum-checkをVerifierから渡された$$\alpha$$でランダム線形結合し、この多項式をsum-checkで証明することで三つのsum-checkを証明します。
+
+<figure><img src="../.gitbook/assets/Screenshot 2024-11-17 at 22.47.17.png" alt=""><figcaption></figcaption></figure>
+
+
+
 ### Reference
 
 * [https://eprint.iacr.org/2023/573](https://eprint.iacr.org/2023/573)
