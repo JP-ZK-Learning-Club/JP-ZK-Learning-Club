@@ -8,6 +8,7 @@
   * [決定問題](prerequisites/cryptography/decision-problem.md)
   * [P/NP問題](prerequisites/cryptography/pnp-wen-ti.md)
   * [計算複雑性理論](prerequisites/cryptography/computational-complexity.md)
+  * [算術回路](prerequisites/mathematics/arithmetic_circuit.md)
 * [数学](prerequisites/mathematics/README.md)
   * [代数的構造](prerequisites/mathematics/algebraic-structure.md)
   * [離散対数問題 (DLP)](prerequisites/mathematics/li-san-dui-shu-wen-ti-dlp.md)
