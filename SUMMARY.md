@@ -14,7 +14,6 @@
   * [楕円曲線](prerequisites/mathematics/elliptic-curve.md)
   * [算術回路](prerequisites/mathematics/arithmetic_circuit.md)
 
-
 ## PSE-Core-Program
 
 * [Week 1](pse-core-program/week-1.md)
@@ -48,6 +47,7 @@
   * [Extension Field](zkvm/backgrounds/extension-field.md)
   * [Glossary](zkvm/backgrounds/glossary.md)
   * [CCS](zkvm/backgrounds/ccs.md)
+  * [Switch-board (Nebula)](zkvm/backgrounds/switch-board-nebula.md)
 * [Building Blocks](zkvm/building-blocks/README.md)
   * [Binius](zkvm/building-blocks/binius.md)
   * [GKR](zkvm/building-blocks/gkr.md)
