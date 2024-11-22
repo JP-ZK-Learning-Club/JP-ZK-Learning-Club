@@ -29,7 +29,7 @@ $$A_i$$を全て結合した$$A^*$$を考えますが、$$B_i, C_i$$も同様に
 これを実現する制約をswitch constrainsに定義していきます。まず、$$A_i$$に対応するzを$$z_i ' = (s_i, x_i, w_i)$$とします。
 
 $$
-w^* = (s_1, x_1, w_1, s_2, x_2, w_3,...,s_{\ell-1}, x_{\ell -1}, w_{\ell -1}, s_{\ell}, x_{\ell}, w_{\ell})
+w^* = (s_1, x_1, w_1, s_2, x_2, w_2,...,s_{\ell-1}, x_{\ell -1}, w_{\ell -1}, s_{\ell}, x_{\ell}, w_{\ell})
 $$
 
 $$s_i$$はセレクターで、次&#x306E;_&#x53;ingle switch constrain&#x74;_&#x3068;_Binary switch constrain&#x74;_&#x3092;満たすように制約します。
